@@ -189,20 +189,31 @@ MonoBehaviour:
 
 
     Press number
-    on the "top" alphanumeric keyboard to switch between scenes.
+    on the "top" alphanumeric keyboard to switch between tools.
 
 
-    "1": Line
-    drawing scene
+    "1": Line drawing
+    tool
 
-    "2": Circle drawing scene
+    "2": Ellipsis drawing tool
 
-    "3": Ellipsis drawing scene
+    "3": Circle drawing tool
 
-    "0":
-    This page
+    "F":
+    Enable/Disable fill mode
 
-    "Esc": Exit'
+
+    "8": Line clipping tool (Draw lines before use
+    it)
+
+    "9": ScanLine fill tool
+
+    "0": Flood fill tool
+
+    "H": Switch drawing/help
+
+    "Esc":
+    Exit'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -265,7 +276,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -113.85864, y: 0, z: -72.4552, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

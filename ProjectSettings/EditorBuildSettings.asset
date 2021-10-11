@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 42e9dc75452e04564b38d7f250b76b8d
   - enabled: 1
-    path: Assets/Scenes/LineScene.unity
+    path: Assets/Scenes/DrawScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CircleScene.unity
     guid: c2c25975c9798430cb8e75895d5044c3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EllipsisScene.unity
     guid: 09a1c8c8a21794f849e196765a01eb19
   m_configObjects: {}

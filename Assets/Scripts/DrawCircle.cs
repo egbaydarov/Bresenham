@@ -1,22 +1,15 @@
 using UnityEngine;
 
-public class DrawCircle : BresenhamDrawer
+public class DrawCircle : DragAndDropDrawer
 {
-    protected override void Bresenham(Vector3 src, Vector3 dest)
+    protected override void DrawFigure(Vector3 start, Vector3 end, bool fill = false)
     {
-        var radius = (int) Vector3.Distance(src, dest);
+        var radius = (int) Vector3.Distance(start, end);
         var param = (5 - radius * 4) / 4;
         var dot = new Vector2Int(0, radius);
         do
         {
-            this.SetPixel(src.x + dot.x, src.y + dot.y);
-            this.SetPixel(src.x + dot.x, src.y - dot.y);
-            this.SetPixel(src.x - dot.x, src.y + dot.y);
-            this.SetPixel(src.x - dot.x, src.y - dot.y);
-            this.SetPixel(src.x + dot.y, src.y + dot.x);
-            this.SetPixel(src.x + dot.y, src.y - dot.x);
-            this.SetPixel(src.x - dot.y, src.y + dot.x);
-            this.SetPixel(src.x - dot.y, src.y - dot.x);
+            SetPixels(start, dot, fill);
 
             if (param < 0)
             {
@@ -32,8 +25,40 @@ public class DrawCircle : BresenhamDrawer
         } while (dot.x <= dot.y);
     }
 
-    protected override void Standard(Vector3 src, Vector3 dest)
+    private void SetPixels(Vector2 start, Vector2 dot, bool fill)
     {
-        //Unity have no standard method for draw on texture
+        this.SetPixel(start.x + dot.x, start.y + dot.y);
+        this.SetPixel(start.x + dot.x, start.y - dot.y);
+        this.SetPixel(start.x - dot.x, start.y + dot.y);
+        this.SetPixel(start.x - dot.x, start.y - dot.y);
+        this.SetPixel(start.x + dot.y, start.y + dot.x);
+        this.SetPixel(start.x + dot.y, start.y - dot.x);
+        this.SetPixel(start.x - dot.y, start.y + dot.x);
+        this.SetPixel(start.x - dot.y, start.y - dot.x);
+
+        if (fill)
+        {
+            var x1 = (int)(start.x - dot.x);
+            var x2 = (int)(start.x + dot.x);
+            var y1 = (int)(start.y - dot.y);
+            var y2 = (int)(start.y + dot.y);
+
+            for (int i = x1; i < x2; ++i)
+            {
+                this.SetPixel(i, y1);
+                this.SetPixel(i, y2);
+            }
+            
+            x1 = (int)(start.x - dot.y);
+            x2 = (int)(start.x + dot.y);
+            y1 = (int)(start.y - dot.x);
+            y2 = (int)(start.y + dot.x);
+            
+            for (int i = x1; i < x2; ++i)
+            {
+                this.SetPixel(i, y1);
+                this.SetPixel(i, y2);
+            }
+        }
     }
 }

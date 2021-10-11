@@ -123,50 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &327505713
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 327505714}
-  - component: {fileID: 327505715}
-  m_Layer: 0
-  m_Name: DrawUtil
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &327505714
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327505713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &327505715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327505713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d77ae11fd36d4a64a13a788ebf1c38a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1242116873}
 --- !u!1001 &1242116872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,11 +181,11 @@ PrefabInstance:
     - target: {fileID: 4029181573867231718, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 327505715}
+      objectReference: {fileID: 0}
     - target: {fileID: 4029181573867231718, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 327505715}
+      objectReference: {fileID: 0}
     - target: {fileID: 4029181573867231718, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PointerUp
@@ -248,14 +204,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
---- !u!114 &1242116873 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4029181573867231716, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
+--- !u!1 &1242116873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4029181573867231722, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
   m_PrefabInstance: {fileID: 1242116872}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &1242116874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242116873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d77ae11fd36d4a64a13a788ebf1c38a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,12 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawEllipsis : BresenhamDrawer
+public class DrawEllipsis : DragAndDropDrawer
 {
-    protected override void Bresenham(Vector3 src, Vector3 dest)
+    protected override void DrawFigure(Vector3 start, Vector3 end, bool fill = false)
     {
-        var center = (src + dest) / 2;
-        var diff = (dest - src) / 2;
+        var center = (start + end) / 2;
+        var diff = (end - start) / 2;
         var radius = new Vector3(Math.Abs(diff.x), Math.Abs(diff.y));
         if (radius.y == 0 || radius.x == 0)
         {
@@ -14,19 +15,14 @@ public class DrawEllipsis : BresenhamDrawer
         }
 
         var dot = new Vector2(0, radius.y);
-
         var coeff = 2 * Vector2.Scale(radius, radius);
         var delta = new Vector2(dot.x * coeff.y, dot.y * coeff.x);
-
         var param1 = radius.y * radius.y
                      - radius.x * radius.x * radius.y
                      + 0.25f * radius.x * radius.x;
         while (delta.x < delta.y)
         {
-            this.SetPixel(dot.x + center.x, dot.y + center.y);
-            this.SetPixel(-dot.x + center.x, dot.y + center.y);
-            this.SetPixel(dot.x + center.x, -dot.y + center.y);
-            this.SetPixel(-dot.x + center.x, -dot.y + center.y);
+            SetPixels(dot, center, fill);
             if (param1 < 0)
             {
                 dot.x++;
@@ -46,14 +42,9 @@ public class DrawEllipsis : BresenhamDrawer
         var param2 = radius.y * radius.y * (dot.x + 0.5f) * (dot.x + 0.5f)
                      + radius.x * radius.x * (dot.y - 1) * (dot.y - 1)
                      - radius.x * radius.x * radius.y * radius.y;
-
         while (dot.y >= 0)
         {
-            this.SetPixel(dot.x + center.x, dot.y + center.y);
-            this.SetPixel(-dot.x + center.x, dot.y + center.y);
-            this.SetPixel(dot.x + center.x, -dot.y + center.y);
-            this.SetPixel(-dot.x + center.x, -dot.y + center.y);
-
+            SetPixels(dot, center, fill);
             if (param2 > 0)
             {
                 dot.y--;
@@ -71,8 +62,24 @@ public class DrawEllipsis : BresenhamDrawer
         }
     }
 
-    protected override void Standard(Vector3 src, Vector3 dest)
+    private void SetPixels(Vector2 dot, Vector2 center, bool fill)
     {
-        //Unity have no standard method for draw on texture
+        this.SetPixel(dot.x + center.x, dot.y + center.y);
+        this.SetPixel(-dot.x + center.x, dot.y + center.y);
+        this.SetPixel(dot.x + center.x, -dot.y + center.y);
+        this.SetPixel(-dot.x + center.x, -dot.y + center.y);
+
+        if (fill)
+        {
+            var y1 = dot.y + center.y;
+            var y2 = -dot.y + center.y;
+            var x2 = (int)dot.x + (int)center.x;
+            var x1 = (int)-dot.x + (int)center.x;
+            for (var i = x1; i <= x2; ++i)
+            {
+                this.SetPixel(i, y1);
+                this.SetPixel(i, y2);
+            }
+        }
     }
 }
