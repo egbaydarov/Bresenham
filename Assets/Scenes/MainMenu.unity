@@ -185,35 +185,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Make "Drag and drop" action with mouse to draw a figure
-
-
-    Press number
-    on the "top" alphanumeric keyboard to switch between tools.
-
-
-    "1": Line drawing
-    tool
-
-    "2": Ellipsis drawing tool
-
-    "3": Circle drawing tool
-
-    "F":
-    Enable/Disable fill mode
-
-
-    "8": Line clipping tool (Draw lines before use
-    it)
-
-    "9": ScanLine fill tool
-
-    "0": Flood fill tool
-
-    "H": Switch drawing/help
-
-    "Esc":
-    Exit'
+  m_text: "\t\t   HELP MENU\n\n\nMake \"Drag and drop\" action with mouse to draw
+    a figure\n\nPress number on the \"top\" alphanumeric keyboard to switch between
+    tools.\n\n\"1\": Line drawing tool\n\"2\": Ellipsis drawing tool\n\"3\": Circle
+    drawing tool\n\"8\": Line clipping tool (Draw lines before use it)\n\"9\": ScanLine
+    fill tool\n\"0\": Flood fill tool\n\n\"F\": Enable/Disable fill mode\n\"C\":
+    Random color\n\n\"H\": Switch drawing/help (x2 Clear)\n\"Esc\": Exit"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -235,7 +212,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 2427
+  m_TextStyleHashCode: 2194
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2

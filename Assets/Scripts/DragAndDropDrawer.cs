@@ -30,7 +30,6 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
         _pointerDown = false;
         var src = transform.InverseTransformPoint(_srcPoint + _shift);
         var dest = transform.InverseTransformPoint(_currentPoint + _shift);
-
         ApplyCache();
         ApplyToTexture();
         StageCache();
@@ -138,6 +137,14 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
         if (Input.GetKeyDown(KeyCode.F))
         {
             innerFilling = !innerFilling;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            brushColor = Random.ColorHSV(0f, 1f,
+                0.9f, 1f,
+                0.9f, 1f, 
+                1, 1);
         }
 
         if (!_pointerDown)

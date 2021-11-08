@@ -16,7 +16,7 @@ public class DrawerManager : MonoBehaviour
 
     private void Update()
     {
-        var cache = new List<DragAndDropDrawer>();
+        var toolCache = new List<DragAndDropDrawer>();
         var selected = false;
         foreach (var tool in Tools)
         {
@@ -26,7 +26,7 @@ public class DrawerManager : MonoBehaviour
                 tool.Value.OnToolEnabled();
                 tool.Value.enabled = true;
                 
-                foreach (var cached in cache)
+                foreach (var cached in toolCache)
                 {
                     cached.enabled = false;
                 }
@@ -37,7 +37,7 @@ public class DrawerManager : MonoBehaviour
             }
             else
             {
-                cache.Add(tool.Value);
+                toolCache.Add(tool.Value);
             }
         }
     }
