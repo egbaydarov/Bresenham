@@ -70,16 +70,46 @@ public class Core : MonoBehaviour
         return points;
     }
 
-    private static float Bernstein(int n, int i, float t)
+    public static List<Vector2> GetBezier(List<Vector2> controlPoints, float interval = 0.01f)
     {
-        float t_i = Mathf.Pow(t, i);
-        float t_n_minus_i = Mathf.Pow((1 - t), (n - i));
-
-        float basis = BinomCoefficient(n, i) * t_i * t_n_minus_i;
-        return basis;
+        int n = controlPoints.Count - 1;
+        List<Vector2> points = new List<Vector2>();
+        for (float t = 0.0f; t <= 1.0f; t += interval)
+        {
+            Vector2 p = new Vector2();
+            for (int i = 0; i < controlPoints.Count; ++i)
+            {
+                p += Bernstein(n, i, t) * controlPoints[i];
+            }
+            points.Add(Vector2Int.RoundToInt(p));
+        }
+        return points;
     }
 
-    public static long BinomCoefficient(long n, long k)
+    public static List<Vector2> GetBezier(Vector2 pt0, Vector2 pt1, Vector2 pt2, Vector2 pt3, float dt = 0.01f)
+    {
+        var points = new List<Vector2>();
+        for (float t = 0.0f; t <= 1.0; t += dt)
+        {
+            points.Add(Bezier(t, pt0, pt1, pt2, pt3));
+        }
+
+        return points;
+    }
+    
+    public static List<Vector2> GetComplexBezier(List<Vector2> allNodes)
+    {
+        throw new NotImplementedException();
+    }
+    
+    private static float Bernstein(int n, int i, float t)
+    {
+        var ti = Mathf.Pow(t, i);
+        var tNmi = Mathf.Pow((1 - t), (n - i));
+        return BinCoefficient(n, i) * ti * tNmi;
+    }
+
+    private static long BinCoefficient(long n, long k)
     {
         if (k > n) { return 0; }
         if (n == k) { return 1; }
@@ -93,53 +123,12 @@ public class Core : MonoBehaviour
         return c;
     }
 
-    public static List<Vector2> GetBezier(List<Vector2> controlPoints, float interval = 0.01f)
+    private static Vector2 Bezier(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
     {
-        int N = controlPoints.Count - 1;
-
-        List<Vector2> points = new List<Vector2>();
-        for (float t = 0.0f; t <= 1.0f; t += interval)
-        {
-            Vector2 p = new Vector2();
-            for (int i = 0; i < controlPoints.Count; ++i)
-            {
-                Vector2 bn = Bernstein(N, i, t) * controlPoints[i];
-                p += bn;
-            }
-            p = new Vector2((int)p.x, (int)p.y);
-            points.Add(p);
-        }
-
-        return points;
-    }
-
-    public static IEnumerable<Vector2> GetBezier(Vector2 pt0, Vector2 pt1, Vector2 pt2, Vector2 pt3, float dt = 0.05f)
-    {
-        var points = new List<Vector2>();
-        for (float t = 0.0f; t <= 1.0; t += dt)
-        {
-            points.Add(new Vector2(X(t, pt0.x, pt1.x, pt2.x, pt3.x), Y(t, pt0.y, pt1.y, pt2.y, pt3.y)));
-        }
-
-        return points;
-    }
-
-    private static int X(float t, float x0, float x1, float x2, float x3)
-    {
-        return (int)(
-            x0 * Math.Pow((1 - t), 3) +
-            x1 * 3 * t * Math.Pow((1 - t), 2) +
-            x2 * 3 * Math.Pow(t, 2) * (1 - t) +
-            x3 * Math.Pow(t, 3)
-        );
-    }
-    private static int Y(float t, float y0, float y1, float y2, float y3)
-    {
-        return (int)(
-            y0 * Math.Pow((1 - t), 3) +
-            y1 * 3 * t * Math.Pow((1 - t), 2) +
-            y2 * 3 * Math.Pow(t, 2) * (1 - t) +
-            y3 * Math.Pow(t, 3)
-        );
+         var point = p0 * Mathf.Pow(1 - t, 3) +
+                p1 * 3 * t * Mathf.Pow(1 - t, 2) +
+                p2 * 3 * Mathf.Pow(t, 2) * (1 - t) +
+                p3 * Mathf.Pow(t, 3);
+         return Vector2Int.RoundToInt(point);
     }
 }

@@ -42,6 +42,21 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
         _pData = eventData;
         _pointerDown = true;
     }
+    
+    public virtual void OnToolEnabled()
+    {
+    }
+
+    protected void EraseStage(IEnumerable<Vector2> points, Color32 eraserColor)
+    {
+        foreach (var pt in points)
+        {
+            var point =  (int)pt.x + (int)pt.y * _texture.width;
+            _colorsBuffer[point] = eraserColor;
+            _stagedColors[point] = eraserColor;
+        }
+        ApplyToTexture();
+    }
 
     protected void SetPixel(float x, float y)
     {
@@ -81,11 +96,11 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
 
     protected abstract void DrawFigure(Vector3 start, Vector3 end, bool fill = false);
 
-    public virtual void OnToolEnabled()
+    protected virtual void OnFigureDrawn(Vector2 src, Vector2 end)
     {
     }
-
-    protected virtual void OnFigureDrawn(Vector2 src, Vector2 end)
+    
+    protected virtual void OnClearReceived()
     {
     }
 
@@ -137,6 +152,11 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
         if (Input.GetKeyDown(KeyCode.F))
         {
             innerFilling = !innerFilling;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            OnClearReceived();
         }
 
         if (Input.GetKeyDown(KeyCode.C))
