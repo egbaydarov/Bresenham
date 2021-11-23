@@ -97,11 +97,41 @@ public class Core : MonoBehaviour
         return points;
     }
     
-    public static List<Vector2> GetComplexBezier(List<Vector2> allNodes)
+    public static List<Vector2> GetComplexBezier(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
     {
-        throw new NotImplementedException();
+        midpoint = Vector2.zero;
+        var points = new List<Vector2>();
+        var count = allNodes.Count;
+        if (count > 0 && count % 4 == 0)
+        {
+            midpoint = Midpoint(allNodes[count - 2], allNodes[count - 1]);
+            var temp = allNodes[count - 1];
+            allNodes[count - 1] = midpoint;
+            allNodes.Add(midpoint);
+            allNodes.Add(temp);
+            if (fill)
+            {
+                var first = allNodes[0];
+                var second = allNodes[1];
+                allNodes.Add(2 * first - second);
+                allNodes.Add(first);
+            }
+
+            count = allNodes.Count;
+            for (var i = 0; i + 3 < count; i += 4)
+            {
+                points.AddRange(GetBezier(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
+            }
+        }
+        
+        return points;
     }
-    
+
+    private static Vector2 Midpoint(Vector2 a, Vector2 b)
+    {
+        return (a + b) / 2;
+    }
+
     private static float Bernstein(int n, int i, float t)
     {
         var ti = Mathf.Pow(t, i);

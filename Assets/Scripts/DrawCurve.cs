@@ -12,13 +12,24 @@ public class DrawCurve : DragAndDropDrawer
         Complex,
     }
     
-    private List<Vector2> _nodes = new List<Vector2>();
-    private List<Vector2> _cache = new List<Vector2>();
-    private HashSet<Vector2> _oldCache = new HashSet<Vector2>();
-    private Color _eraserColor = Color.white;
+    private readonly List<Vector2> _nodes = new List<Vector2>();
+    private static readonly Color EraserColor = Color.white;
 
+    private List<Vector2> _cache = new List<Vector2>();
+    private List<Vector2> _oldCache = new List<Vector2>();
+    private Vector2 midpointCached;
+
+    [SerializeField]
+    private Task task = Task.OrderN;
+    
     public override void OnToolEnabled()
     {
+    }
+
+    protected override void OnClearReceived()
+    {
+        midpointCached = Vector2.zero;
+        _nodes.Clear();
     }
 
     protected override void DrawFigure(Vector3 start, Vector3 end, bool fill = false)
@@ -29,7 +40,7 @@ public class DrawCurve : DragAndDropDrawer
         }
         var allNodes = _nodes.ToList();
         allNodes.Add(end);
-        var points = GetCurvePoints(allNodes, Task.OrderN);
+        var points = GetCurvePoints(allNodes, fill);
         for (var i = 1; i < points.Count; ++i)
         {
             foreach (var point in Core.GetLine(points[i - 1], points[i]))
@@ -38,28 +49,23 @@ public class DrawCurve : DragAndDropDrawer
                 this.SetPixel(point.x, point.y);
             }
         }
-        EraseStage(_oldCache, _eraserColor);
+        EraseStage(_oldCache, EraserColor);
     }
 
     protected override void OnFigureDrawn(Vector2 src, Vector2 end)
     {
+        if (midpointCached != Vector2.zero)
+        {
+            _nodes.Add(midpointCached);
+            _nodes.Add(midpointCached);
+        }
         _nodes.Add(end);
-        // var points = GetCurvePoints(_nodes, Task.Order3);
-        // for (var i = 1; i < points.Count; ++i)
-        // {
-        //     foreach (var point in Core.GetLine(points[i - 1], points[i]))
-        //     {
-        //         _cache.Add(point);
-        //         _oldCache.Remove(point);
-        //         this.SetPixel(point.x, point.y);
-        //     }
-        // }
-        // EraseStage(_oldCache, _eraserColor);
-        _oldCache = new HashSet<Vector2>(_cache);
+        
+        _oldCache = _cache;
         _cache = new List<Vector2>();
     }
 
-    private List<Vector2> GetCurvePoints(List<Vector2> input, Task task)
+    private List<Vector2> GetCurvePoints(List<Vector2> input, bool fill)
     {
         var count = input.Count;
         List<Vector2> points = new List<Vector2>();
@@ -79,7 +85,7 @@ public class DrawCurve : DragAndDropDrawer
                 }
                 break;
             case Task.Complex:
-                points = Core.GetComplexBezier(input);
+                points = Core.GetComplexBezier(input, out midpointCached, fill);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(task), task, null);

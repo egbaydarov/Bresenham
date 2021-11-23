@@ -154,7 +154,7 @@ public abstract class DragAndDropDrawer : MonoBehaviour, IPointerUpHandler, IPoi
             innerFilling = !innerFilling;
         }
         
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             OnClearReceived();
         }
