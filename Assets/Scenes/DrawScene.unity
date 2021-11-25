@@ -136,6 +136,10 @@ GameObject:
   - component: {fileID: 300239378}
   - component: {fileID: 300239376}
   - component: {fileID: 300239375}
+  - component: {fileID: 300239380}
+  - component: {fileID: 300239377}
+  - component: {fileID: 300239381}
+  - component: {fileID: 300239382}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -179,6 +183,7 @@ MonoBehaviour:
   brushColor:
     serializedVersion: 2
     rgba: 4278190080
+  task: 0
 --- !u!114 &300239376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +196,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d79b40325d845439f9225923cc318bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &300239377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a440043bcb08791478e236aaf4f23981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 51
+  innerFilling: 1
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  task: 2
 --- !u!114 &300239378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +252,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300239373}
   m_CullTransparentMesh: 0
+--- !u!114 &300239380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a440043bcb08791478e236aaf4f23981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 50
+  innerFilling: 1
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  task: 1
+--- !u!114 &300239381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a440043bcb08791478e236aaf4f23981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 52
+  innerFilling: 1
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  task: 3
+--- !u!114 &300239382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a440043bcb08791478e236aaf4f23981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 53
+  innerFilling: 1
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  task: 4
 --- !u!114 &598693332
 MonoBehaviour:
   m_ObjectHideFlags: 0

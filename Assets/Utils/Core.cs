@@ -161,4 +161,51 @@ public class Core : MonoBehaviour
                 p3 * Mathf.Pow(t, 3);
          return Vector2Int.RoundToInt(point);
     }
+    
+    public static List<Vector2> BSplines(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float dt = 0.01f)
+    {
+        List<Vector2> points = new List<Vector2>();
+        Vector2[] spl = new Vector2[5];
+        spl[0] = (-p1 + 3 * p2 - 3 * p3 + p4) / 6.0f;
+        spl[1] = (3 * p1 - 6 * p2 + 3 * p3) / 6.0f;
+        spl[2] = (-3 * p1 + 3 * p3) / 6.0f;
+        spl[3] = (p1 + 4 * p2 + p3) / 6.0f;
+        
+        for (float t = 0; t <= 1; t += dt)
+        {
+            points.Add(Vector2Int.RoundToInt((spl[2] + t * (spl[1] + t * spl[0])) * t + spl[3]));
+        }
+
+        return points;
+    }
+    
+    public static List<Vector2> GetComplexBSpline(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
+    {
+        midpoint = Vector2.zero;
+        var points = new List<Vector2>();
+        var count = allNodes.Count;
+        if (count > 0 && count % 4 == 0)
+        {
+            midpoint = Midpoint(allNodes[count - 2], allNodes[count - 1]);
+            var temp = allNodes[count - 1];
+            allNodes[count - 1] = midpoint;
+            allNodes.Add(midpoint);
+            allNodes.Add(temp);
+            if (fill)
+            {
+                var first = allNodes[0];
+                var second = allNodes[1];
+                allNodes.Add(2 * first - second);
+                allNodes.Add(first);
+            }
+
+            count = allNodes.Count;
+            for (var i = 0; i + 3 < count; i += 4)
+            {
+                points.AddRange(BSplines(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
+            }
+        }
+        
+        return points;
+    }
 }

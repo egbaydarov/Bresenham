@@ -10,6 +10,8 @@ public class DrawCurve : DragAndDropDrawer
         OrderN,
         Order3,
         Complex,
+        BSplines3,
+        BSplinesComplex
     }
     
     private readonly List<Vector2> _nodes = new List<Vector2>();
@@ -86,6 +88,19 @@ public class DrawCurve : DragAndDropDrawer
                 break;
             case Task.Complex:
                 points = Core.GetComplexBezier(input, out midpointCached, fill);
+                break;
+            case Task.BSplines3:
+                if (count > 3)
+                {
+                    points = Core.BSplines(
+                        input[count - 4],
+                        input[count - 3],
+                        input[count - 2],
+                        input[count - 1]);
+                }
+                break;
+            case Task.BSplinesComplex:
+                points = Core.GetComplexBSpline(input, out midpointCached, fill);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(task), task, null);
