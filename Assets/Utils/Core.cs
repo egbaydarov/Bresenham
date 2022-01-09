@@ -79,7 +79,7 @@ public class Core : MonoBehaviour
             Vector2 p = new Vector2();
             for (int i = 0; i < controlPoints.Count; ++i)
             {
-                p += Bernstein(n, i, t) * controlPoints[i];
+                p += Bernstein(n, i, t) * new Vector2(controlPoints[i].x, controlPoints[i].y);
             }
             points.Add(Vector2Int.RoundToInt(p));
         }
@@ -127,9 +127,10 @@ public class Core : MonoBehaviour
         return points;
     }
 
-    private static Vector2 Midpoint(Vector2 a, Vector2 b)
+    public static Vector2 Midpoint(Vector2 a, Vector2 b)
     {
-        return (a + b) / 2;
+        var res = (a + b) / 2;
+        return res;
     }
 
     private static float Bernstein(int n, int i, float t)
@@ -179,33 +180,126 @@ public class Core : MonoBehaviour
         return points;
     }
     
-    public static List<Vector2> GetComplexBSpline(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
+    public static List<Vector2> GetComplexBSpline(List<Vector2> ALLNodes, out Vector2 midpoint, bool fill)
     {
         midpoint = Vector2.zero;
         var points = new List<Vector2>();
-        var count = allNodes.Count;
+        var count = ALLNodes.Count;
         if (count > 0 && count % 4 == 0)
         {
-            midpoint = Midpoint(allNodes[count - 2], allNodes[count - 1]);
-            var temp = allNodes[count - 1];
-            allNodes[count - 1] = midpoint;
-            allNodes.Add(midpoint);
-            allNodes.Add(temp);
+            midpoint = Midpoint(ALLNodes[count - 2], ALLNodes[count - 1]);
+            var temp = ALLNodes[count - 1];
+            ALLNodes[count - 1] = midpoint;
+            ALLNodes.Add(midpoint);
+            ALLNodes.Add(temp);
             if (fill)
             {
-                var first = allNodes[0];
-                var second = allNodes[1];
-                allNodes.Add(2 * first - second);
-                allNodes.Add(first);
+                var first = ALLNodes[0];
+                var second = ALLNodes[1];
+                ALLNodes.Add(2 * first - second);
+                ALLNodes.Add(first);
             }
 
-            count = allNodes.Count;
+            count = ALLNodes.Count;
             for (var i = 0; i + 3 < count; i += 4)
             {
-                points.AddRange(BSplines(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
+                points.AddRange(BSplines(ALLNodes[i], ALLNodes[i + 1], ALLNodes[i + 2], ALLNodes[i + 3]));
             }
         }
         
+        return points;
+    }
+
+    public static List<Vector2> GetComplexBSpline(List<Vector2> ALLNodes, bool loop)
+    {
+        var points = new List<Vector2>();
+        var count = ALLNodes.Count;
+        if (count > 0 && count % 4 == 0)
+        {
+            var midpoint = Midpoint(ALLNodes[count - 2], ALLNodes[count - 1]);
+            var temp = ALLNodes[count - 1];
+            ALLNodes[count - 1] = new Vector2(midpoint.x, midpoint.y);
+            ALLNodes.Add(temp);
+            if (loop)
+            {
+                var first = ALLNodes[0];
+                var second = ALLNodes[1];
+                ALLNodes.Add(2 * first - second);
+                ALLNodes.Add(first);
+            }
+
+            count = ALLNodes.Count;
+            for (var i = 0; i + 3 < count; i += 4)
+            {
+                points.AddRange(BSplines(ALLNodes[i], ALLNodes[i + 1], ALLNodes[i + 2], ALLNodes[i + 3]));
+            }
+        }
+        
+        return points;
+    }
+
+    public static List<Vector2> GetComplexBezier(List<Vector2> allNodes, List<int> types, bool loop)
+    {
+        var points = new List<Vector2>();
+        var count = allNodes.Count;
+        if (count <= 3)
+        {
+            return points;
+        }
+        
+        switch ((count - 1) % 3)
+        {
+            case 0:
+                var midpoint = Midpoint(
+                    allNodes[count - 2], allNodes[count - 1]);
+                var temp = allNodes[count - 1];
+                allNodes[count - 1] = midpoint;
+                types[count - 1] = 0;
+                types[count - 2] = -1;
+                allNodes.Add(temp);
+                types.Add(1);
+                if (loop && types[1] == 2)
+                {
+                }
+                else if (!loop && types[1] == 0)
+                {
+                    
+                }
+                break;
+            case 1:
+            case 2:
+            case 3:
+                break;
+        }
+            
+        count = allNodes.Count;
+        for (var i = 3; i < count; i += 3)
+        {
+            points.AddRange(GetBezier(allNodes[i - 3], allNodes[i - 2], allNodes[i - 1], allNodes[i]));
+        }
+
+        if (count > 1  && loop)
+        {
+            if ((count - 1) % 3 == 1)
+            {
+                var first = allNodes[0];
+                var second = allNodes[1];
+                var middleFirst = (2 * first - second);
+                points.AddRange(GetBezier(allNodes[count - 2], allNodes[count - 1], middleFirst, first));
+            }
+            else if ((count - 1) % 3 == 2)
+            {
+                var last = allNodes[count - 1];
+                var preLast = allNodes[count - 2];
+                var first = allNodes[0];
+                var second = allNodes[1];
+                var middleFirst = (2 * first - second);
+                var middleLast = (2 * last - preLast);
+                var middleLastLast = Midpoint(middleLast, last);
+                points.AddRange(GetBezier(allNodes[count - 3], preLast, last, middleLastLast));
+                points.AddRange(GetBezier(middleLastLast, middleLast, middleFirst, first));
+            }
+        }
         return points;
     }
 }
