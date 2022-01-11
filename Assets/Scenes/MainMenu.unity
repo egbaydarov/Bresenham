@@ -185,12 +185,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\t\t   HELP MENU\n\n\nMake \"Drag and drop\" action with mouse to draw
-    a curve\n\nPress number on the \"top\" alphanumeric keyboard to switch between
-    tools.\n\n\"1\": Bezier for N\n\"2\": Bezier by order 3\n\"3\": Contructed Bezier
-    by order 3\n\"4\": B Spline\n\"5\": Constructed B spline\n\n\"F\": Enable/Disable
-    fill mode\n\"C\": Random color\n\"Q\": Clear points\n\n\"H\": Switch drawing/help
-    (x2 Clear)\n\"Esc\": Exit"
+  m_text: "\t\t   HELP MENU\n\nClick on canvas to add a point.\n\nMake \"Drag and
+    drop\" action with mouse to move points if possible\n\nPress number on the \"top\"
+    alphanumeric keyboard to switch between tools.\n\n\"1\": Bezier for N\n\"2\":
+    Bezier by order 3\n\"3\": Complex Bezier by order 3\n\"4\": B Spline\n\"5\":
+    Complex B spline\n\n\"L\": Loop/Unloop curve\n\"C\": Remove all points\n\"A\":
+    Show alternative curve\n\n\"H\": Switch drawing/help\n\"Esc\": Exit"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -338,5 +338,23 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4029181573389355965, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
+--- !u!1 &1604971421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4029181573389355937, guid: 7aed8d1ec267048ddae5aae74ce49cda, type: 3}
+  m_PrefabInstance: {fileID: 1604971420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1604971422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604971421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d35ebc225e6442a96f1e6dd17e40326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

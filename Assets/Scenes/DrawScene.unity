@@ -136,6 +136,10 @@ GameObject:
   - component: {fileID: 300239378}
   - component: {fileID: 300239376}
   - component: {fileID: 300239375}
+  - component: {fileID: 300239382}
+  - component: {fileID: 300239381}
+  - component: {fileID: 300239380}
+  - component: {fileID: 300239377}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -187,7 +191,7 @@ MonoBehaviour:
   brushColorAlt:
     serializedVersion: 2
     rgba: 4294901760
-  task: 2
+  task: 0
   loop: 0
   AltFlag: 0
 --- !u!114 &300239376
@@ -202,6 +206,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d79b40325d845439f9225923cc318bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &300239377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9926df241d0846ce895fe53ffba6829d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 53
+  zeroThird:
+    serializedVersion: 2
+    rgba: 4278255360
+  firstSecond:
+    serializedVersion: 2
+    rgba: 4278190335
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  brushColorAlt:
+    serializedVersion: 2
+    rgba: 4294901760
+  task: 4
+  loop: 0
+  AltFlag: 0
 --- !u!114 &300239378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +272,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300239373}
   m_CullTransparentMesh: 0
+--- !u!114 &300239380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9926df241d0846ce895fe53ffba6829d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 52
+  zeroThird:
+    serializedVersion: 2
+    rgba: 4278255360
+  firstSecond:
+    serializedVersion: 2
+    rgba: 4278190335
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  brushColorAlt:
+    serializedVersion: 2
+    rgba: 4294901760
+  task: 3
+  loop: 0
+  AltFlag: 0
+--- !u!114 &300239381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9926df241d0846ce895fe53ffba6829d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 51
+  zeroThird:
+    serializedVersion: 2
+    rgba: 4278255360
+  firstSecond:
+    serializedVersion: 2
+    rgba: 4278190335
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  brushColorAlt:
+    serializedVersion: 2
+    rgba: 4294901760
+  task: 2
+  loop: 0
+  AltFlag: 0
+--- !u!114 &300239382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300239373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9926df241d0846ce895fe53ffba6829d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleButton: 50
+  zeroThird:
+    serializedVersion: 2
+    rgba: 4278255360
+  firstSecond:
+    serializedVersion: 2
+    rgba: 4278190335
+  brushColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  brushColorAlt:
+    serializedVersion: 2
+    rgba: 4294901760
+  task: 1
+  loop: 0
+  AltFlag: 0
 --- !u!114 &598693332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +365,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2302619448105193911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e055a63e09494737bc0a1ec3e80a0d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d35ebc225e6442a96f1e6dd17e40326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1207258273214844185

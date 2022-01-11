@@ -4,11 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class ClickPointDrawer : Drawer, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public abstract class ClickPointDrawer : Drawer, IPointerClickHandler, IPointerDownHandler//, IPointerUpHandler
 {
     protected List<Vector2> points = new List<Vector2>();
     protected List<int> dotTypes = new List<int>();
     private int pointWidth = 15;
+    private PointerEventData eData;
 
     [SerializeField] private Color32 zeroThird = Color.green;
     [SerializeField] private Color32 firstSecond = Color.red;
@@ -35,6 +36,7 @@ public abstract class ClickPointDrawer : Drawer, IPointerClickHandler, IPointerD
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        eData = eventData;
         var srcPoint = (Vector3)eventData.pointerCurrentRaycast.screenPosition;
         var src = transform.InverseTransformPoint(srcPoint + Shift);
         if (src.x > pointsLocator.GetLength(0) || src.x < 0 || src.y >= pointsLocator.GetLength(1) || src.y < 0)
@@ -125,9 +127,15 @@ public abstract class ClickPointDrawer : Drawer, IPointerClickHandler, IPointerD
         }
     }
     
-    private void Update()
+    protected virtual void Update()
     {
+        OnPointerUp(eData);
         DiscardCache();
+
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            points.Clear();
+        }
 
         var pts = Draw();
         var ptsAlt = DrawAlt();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -180,59 +181,56 @@ public class Core : MonoBehaviour
         return points;
     }
     
-    public static List<Vector2> GetComplexBSpline(List<Vector2> ALLNodes, out Vector2 midpoint, bool fill)
+    public static List<Vector2> GetComplexBSpline(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
     {
         midpoint = Vector2.zero;
         var points = new List<Vector2>();
-        var count = ALLNodes.Count;
+        var count = allNodes.Count;
         if (count > 0 && count % 4 == 0)
         {
-            midpoint = Midpoint(ALLNodes[count - 2], ALLNodes[count - 1]);
-            var temp = ALLNodes[count - 1];
-            ALLNodes[count - 1] = midpoint;
-            ALLNodes.Add(midpoint);
-            ALLNodes.Add(temp);
+            midpoint = Midpoint(allNodes[count - 2], allNodes[count - 1]);
+            var temp = allNodes[count - 1];
+            allNodes[count - 1] = midpoint;
+            allNodes.Add(midpoint);
+            allNodes.Add(temp);
             if (fill)
             {
-                var first = ALLNodes[0];
-                var second = ALLNodes[1];
-                ALLNodes.Add(2 * first - second);
-                ALLNodes.Add(first);
+                var first = allNodes[0];
+                var second = allNodes[1];
+                allNodes.Add(2 * first - second);
+                allNodes.Add(first);
             }
 
-            count = ALLNodes.Count;
+            count = allNodes.Count;
             for (var i = 0; i + 3 < count; i += 4)
             {
-                points.AddRange(BSplines(ALLNodes[i], ALLNodes[i + 1], ALLNodes[i + 2], ALLNodes[i + 3]));
+                points.AddRange(BSplines(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
             }
         }
         
         return points;
     }
 
-    public static List<Vector2> GetComplexBSpline(List<Vector2> ALLNodes, bool loop)
+    public static List<Vector2> GetComplexBSpline(List<Vector2> allNodes, bool loop)
     {
         var points = new List<Vector2>();
-        var count = ALLNodes.Count;
-        if (count > 0 && count % 4 == 0)
-        {
-            var midpoint = Midpoint(ALLNodes[count - 2], ALLNodes[count - 1]);
-            var temp = ALLNodes[count - 1];
-            ALLNodes[count - 1] = new Vector2(midpoint.x, midpoint.y);
-            ALLNodes.Add(temp);
-            if (loop)
-            {
-                var first = ALLNodes[0];
-                var second = ALLNodes[1];
-                ALLNodes.Add(2 * first - second);
-                ALLNodes.Add(first);
-            }
+        var count = allNodes.Count;
 
-            count = ALLNodes.Count;
-            for (var i = 0; i + 3 < count; i += 4)
-            {
-                points.AddRange(BSplines(ALLNodes[i], ALLNodes[i + 1], ALLNodes[i + 2], ALLNodes[i + 3]));
-            }
+        if (count < 4)
+        {
+            return points;
+        }
+        
+        for (int i = 3; i < allNodes.Count; ++i)
+        {
+            points.AddRange(BSplines(allNodes[i - 3], allNodes[i - 2], allNodes[i - 1], allNodes[i]));
+        }
+
+        if (loop)
+        {
+            points.AddRange(BSplines(allNodes[count - 3], allNodes[count - 2], allNodes[count - 1], allNodes[0]));
+            points.AddRange(BSplines(allNodes[count - 2], allNodes[count - 1], allNodes[0], allNodes[1]));
+            points.AddRange(BSplines(allNodes[count - 1], allNodes[0], allNodes[1], allNodes[2]));
         }
         
         return points;

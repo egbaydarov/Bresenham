@@ -107,4 +107,19 @@ public class DrawCurveV2 : ClickPointDrawer
         
         return p;
     }
+
+    protected override void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            AltFlag = !AltFlag;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            loop = !loop;
+        }
+        
+        base.Update();
+    }
 }
