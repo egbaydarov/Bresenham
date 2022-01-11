@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DrawSceneManager : MonoBehaviour
+class Menu : MonoBehaviour
 {
     void Update()
     {

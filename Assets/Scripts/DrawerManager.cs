@@ -7,16 +7,16 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class DrawerManager : MonoBehaviour
 {
-    private readonly Color32 _initColor = Color.white;
+    private readonly Color32 initColor = Color.white;
 
-    public readonly ConcurrentDictionary<string, DragAndDropDrawer> Tools =
-        new ConcurrentDictionary<string, DragAndDropDrawer>();
+    public readonly ConcurrentDictionary<string, Drawer> Tools =
+        new ConcurrentDictionary<string, Drawer>();
     public Color32[] ColorsBuffer { get; private set; }
     public Color32[] StagedColors { get; private set; }
 
     private void Update()
     {
-        var toolCache = new List<DragAndDropDrawer>();
+        var toolCache = new List<Drawer>();
         var selected = false;
         foreach (var tool in Tools)
         {
@@ -57,7 +57,7 @@ public class DrawerManager : MonoBehaviour
 
         for (int i = 0; i < ColorsBuffer.Length; ++i)
         {
-            ColorsBuffer[i] = _initColor;
+            ColorsBuffer[i] = initColor;
         }
         
         StagedColors = new Color32[ColorsBuffer.Length];
