@@ -320,61 +320,36 @@ public class Core
 
     public static List<Vector2> GetSplinesDeBoor(List<Vector2> points, int degree)
     {
-        var k = degree;
-        var m = k + 1;
-        var n = points.Count - 1;
-        var knots = new List<double>(n + m);
-        for (var i = 0; i <= n + m; ++i)
-        {
-            knots.Add(i);
-        }
-
+        var vertexCount = points.Count;
+        var n = vertexCount - 1;
+        var line = new Vector2[vertexCount + degree + 1];
         var result = new List<Vector2>();
-        if (points.Count > 4)
+
+        if (vertexCount < degree - 1)
         {
-            for (var x = 0d; x < knots.Count; x += 0.01)
+            return result;
+        }
+        for (float t = degree - 1; t < n + 1; t += 0.01f) 
+        {
+            var j = (int) t;
+            for (var b = j - degree + 1; b <= j; b++)
             {
-                for (int kk = degree; kk > -1; --kk)
+                line[b] = points[b];
+            }
+
+            for (var r = 1; r <= degree - 1; r++)
+            {
+                for (var i = j; i >= j - degree + 1 + r; i--)
                 {
-                    var i = WhichInterval(x, knots);
-                    result.Add(DeBoor(kk, degree, i, x, knots, points));
+                    line[i].x = (t - i) / (i + degree - r - i) * line[i].x +
+                                (i + degree - r - t) / (i + degree - r - i) * line[i - 1].x;
+                    line[i].y = (t - i) / (i + degree - r - i) * line[i].y +
+                                (i + degree - r - t) / (i + degree - r - i) * line[i - 1].y;
                 }
             }
+            result.Add(new Vector2(line[j].x, line[j].y));
         }
 
         return result;
-    }
-
-    public static int WhichInterval(double x, List<double> knot)
-    {
-        var index = -1;
-
-        for (var i = 1; i <= knot.Count - 1; i++)
-        {
-            if (x < knot[i])
-            {
-                index = i - 1;
-                break;
-            }
-        }
-
-        if (Math.Abs(x - knot[knot.Count - 1]) < 0.0001)
-        {
-            index = knot.Count - 1;
-        }
-
-        return index;
-    }
-
-    private static Vector2 DeBoor(int k, int degree, int i, double x, List<double> knots, List<Vector2> ctrlPoints)
-    {
-        if (k == 0)
-            return ctrlPoints[i];
-        else
-        {
-            var alpha = (x - knots[i]) / (knots[i + degree + 1 - k] - knots[i]);
-            return (DeBoor(k - 1, degree, i - 1, x, knots, ctrlPoints) * (float) (1 - alpha) +
-                    DeBoor(k - 1, degree, i, x, knots, ctrlPoints) * (float) alpha);
-        }
     }
 }

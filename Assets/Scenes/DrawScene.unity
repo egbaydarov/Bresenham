@@ -194,7 +194,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 0
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &300239376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +235,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 4
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &300239378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +302,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 3
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &300239381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +331,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 2
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &300239382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +360,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 1
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &300239383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,10 +377,10 @@ MonoBehaviour:
   toggleButton: 54
   zeroThird:
     serializedVersion: 2
-    rgba: 4278255360
+    rgba: 4278226175
   firstSecond:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4281899591
   brushColor:
     serializedVersion: 2
     rgba: 4278190080
@@ -384,7 +389,8 @@ MonoBehaviour:
     rgba: 4294901760
   task: 5
   loop: 0
-  AltFlag: 0
+  altFlag: 0
+  order: 4
 --- !u!114 &598693332
 MonoBehaviour:
   m_ObjectHideFlags: 0
