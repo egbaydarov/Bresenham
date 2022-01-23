@@ -10,7 +10,8 @@ public class DrawCurveV2 : ClickPointDrawer
         Order3,
         Complex,
         BSplines3,
-        BSplinesComplex
+        BSplinesComplex,
+        BSplinesDeBoor
     }
     
     [SerializeField]
@@ -18,8 +19,8 @@ public class DrawCurveV2 : ClickPointDrawer
 
     [SerializeField] private bool loop = false;
     [SerializeField] private bool AltFlag = false;
-    
-    private List<Vector2> bridgePoints = new List<Vector2>();
+    [SerializeField] private int Order = 4;
+
     
     protected override List<Vector2> Draw()
     {
@@ -100,6 +101,9 @@ public class DrawCurveV2 : ClickPointDrawer
                 break;
             case Task.BSplinesComplex:
                 p = Core.GetComplexBSpline(points, loop);
+                break;
+            case Task.BSplinesDeBoor:
+                p = Core.GetSplinesDeBoor(points, Order);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(task), task, null);

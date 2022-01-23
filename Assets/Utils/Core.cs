@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class Core : MonoBehaviour
+public class Core
 {
     public static IEnumerable<Vector2> GetLine(Vector3 start, Vector3 end)
     {
@@ -52,13 +52,13 @@ public class Core : MonoBehaviour
             delta2.x = 0;
         }
 
-        var counter = (int)l >> 1;
+        var counter = (int) l >> 1;
         for (var i = 0; i <= l; ++i)
         {
             points.Add(new Vector2(start.x, start.y));
-            if ((counter += (int)s) >= l)
+            if ((counter += (int) s) >= l)
             {
-                counter -= (int)l;
+                counter -= (int) l;
                 start.x += delta1.x;
                 start.y += delta1.y;
             }
@@ -68,6 +68,7 @@ public class Core : MonoBehaviour
                 start.y += delta2.y;
             }
         }
+
         return points;
     }
 
@@ -82,8 +83,10 @@ public class Core : MonoBehaviour
             {
                 p += Bernstein(n, i, t) * new Vector2(controlPoints[i].x, controlPoints[i].y);
             }
+
             points.Add(Vector2Int.RoundToInt(p));
         }
+
         return points;
     }
 
@@ -97,7 +100,7 @@ public class Core : MonoBehaviour
 
         return points;
     }
-    
+
     public static List<Vector2> GetComplexBezier(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
     {
         midpoint = Vector2.zero;
@@ -124,7 +127,7 @@ public class Core : MonoBehaviour
                 points.AddRange(GetBezier(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
             }
         }
-        
+
         return points;
     }
 
@@ -143,27 +146,40 @@ public class Core : MonoBehaviour
 
     private static long BinCoefficient(long n, long k)
     {
-        if (k > n) { return 0; }
-        if (n == k) { return 1; }
-        if (k > n - k) { k = n - k; }
+        if (k > n)
+        {
+            return 0;
+        }
+
+        if (n == k)
+        {
+            return 1;
+        }
+
+        if (k > n - k)
+        {
+            k = n - k;
+        }
+
         long c = 1;
         for (long i = 1; i <= k; i++)
         {
             c *= n--;
             c /= i;
         }
+
         return c;
     }
 
     private static Vector2 Bezier(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
     {
-         var point = p0 * Mathf.Pow(1 - t, 3) +
-                p1 * 3 * t * Mathf.Pow(1 - t, 2) +
-                p2 * 3 * Mathf.Pow(t, 2) * (1 - t) +
-                p3 * Mathf.Pow(t, 3);
-         return Vector2Int.RoundToInt(point);
+        var point = p0 * Mathf.Pow(1 - t, 3) +
+                    p1 * 3 * t * Mathf.Pow(1 - t, 2) +
+                    p2 * 3 * Mathf.Pow(t, 2) * (1 - t) +
+                    p3 * Mathf.Pow(t, 3);
+        return Vector2Int.RoundToInt(point);
     }
-    
+
     public static List<Vector2> BSplines(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float dt = 0.01f)
     {
         List<Vector2> points = new List<Vector2>();
@@ -172,7 +188,7 @@ public class Core : MonoBehaviour
         spl[1] = (3 * p1 - 6 * p2 + 3 * p3) / 6.0f;
         spl[2] = (-3 * p1 + 3 * p3) / 6.0f;
         spl[3] = (p1 + 4 * p2 + p3) / 6.0f;
-        
+
         for (float t = 0; t <= 1; t += dt)
         {
             points.Add(Vector2Int.RoundToInt((spl[2] + t * (spl[1] + t * spl[0])) * t + spl[3]));
@@ -180,7 +196,7 @@ public class Core : MonoBehaviour
 
         return points;
     }
-    
+
     public static List<Vector2> GetComplexBSpline(List<Vector2> allNodes, out Vector2 midpoint, bool fill)
     {
         midpoint = Vector2.zero;
@@ -207,7 +223,7 @@ public class Core : MonoBehaviour
                 points.AddRange(BSplines(allNodes[i], allNodes[i + 1], allNodes[i + 2], allNodes[i + 3]));
             }
         }
-        
+
         return points;
     }
 
@@ -220,7 +236,7 @@ public class Core : MonoBehaviour
         {
             return points;
         }
-        
+
         for (int i = 3; i < allNodes.Count; ++i)
         {
             points.AddRange(BSplines(allNodes[i - 3], allNodes[i - 2], allNodes[i - 1], allNodes[i]));
@@ -232,7 +248,7 @@ public class Core : MonoBehaviour
             points.AddRange(BSplines(allNodes[count - 2], allNodes[count - 1], allNodes[0], allNodes[1]));
             points.AddRange(BSplines(allNodes[count - 1], allNodes[0], allNodes[1], allNodes[2]));
         }
-        
+
         return points;
     }
 
@@ -244,7 +260,7 @@ public class Core : MonoBehaviour
         {
             return points;
         }
-        
+
         switch ((count - 1) % 3)
         {
             case 0:
@@ -261,22 +277,22 @@ public class Core : MonoBehaviour
                 }
                 else if (!loop && types[1] == 0)
                 {
-                    
                 }
+
                 break;
             case 1:
             case 2:
             case 3:
                 break;
         }
-            
+
         count = allNodes.Count;
         for (var i = 3; i < count; i += 3)
         {
             points.AddRange(GetBezier(allNodes[i - 3], allNodes[i - 2], allNodes[i - 1], allNodes[i]));
         }
 
-        if (count > 1  && loop)
+        if (count > 1 && loop)
         {
             if ((count - 1) % 3 == 1)
             {
@@ -298,6 +314,67 @@ public class Core : MonoBehaviour
                 points.AddRange(GetBezier(middleLastLast, middleLast, middleFirst, first));
             }
         }
+
         return points;
+    }
+
+    public static List<Vector2> GetSplinesDeBoor(List<Vector2> points, int degree)
+    {
+        var k = degree;
+        var m = k + 1;
+        var n = points.Count - 1;
+        var knots = new List<double>(n + m);
+        for (var i = 0; i <= n + m; ++i)
+        {
+            knots.Add(i);
+        }
+
+        var result = new List<Vector2>();
+        if (points.Count > 4)
+        {
+            for (var x = 0d; x < knots.Count; x += 0.01)
+            {
+                for (int kk = degree; kk > -1; --kk)
+                {
+                    var i = WhichInterval(x, knots);
+                    result.Add(DeBoor(kk, degree, i, x, knots, points));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static int WhichInterval(double x, List<double> knot)
+    {
+        var index = -1;
+
+        for (var i = 1; i <= knot.Count - 1; i++)
+        {
+            if (x < knot[i])
+            {
+                index = i - 1;
+                break;
+            }
+        }
+
+        if (Math.Abs(x - knot[knot.Count - 1]) < 0.0001)
+        {
+            index = knot.Count - 1;
+        }
+
+        return index;
+    }
+
+    private static Vector2 DeBoor(int k, int degree, int i, double x, List<double> knots, List<Vector2> ctrlPoints)
+    {
+        if (k == 0)
+            return ctrlPoints[i];
+        else
+        {
+            var alpha = (x - knots[i]) / (knots[i + degree + 1 - k] - knots[i]);
+            return (DeBoor(k - 1, degree, i - 1, x, knots, ctrlPoints) * (float) (1 - alpha) +
+                    DeBoor(k - 1, degree, i, x, knots, ctrlPoints) * (float) alpha);
+        }
     }
 }
