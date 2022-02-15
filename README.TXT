@@ -15,6 +15,7 @@ Press number on the "top" alphanumeric keyboard to switch between tools.
 "3": Complex Bezier by order 3
 "4": B Spline
 "5": Complex B spline
+"5": De Boor spline
 
 "L": Loop/Unloop curve
 "C": Remove all points
